@@ -39,7 +39,7 @@ class TeamButton extends StatelessWidget {
               ),
             ),
             Text(
-              "points: " + team.points.data.toString(),
+              "OPR: " + team.points.data.toString(),
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 15,

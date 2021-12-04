@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_wb/wrapper_classes/form_wrapper_classes.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import 'dart:async';
 
 class FormText extends StatelessWidget {
   final String text;
@@ -114,12 +115,10 @@ class _FormCounterState extends State<FormCounter> {
           width: 140,
           height: 100,
           child: Center(
-            child: Container(
-              child: Text(
-                widget.input.data.toString(),
-                textScaleFactor: 2,
-                style: TextStyle(fontSize: 35),
-            ),
+            child: Text(
+              widget.input.data.toString(),
+              textScaleFactor: 2,
+              style: const TextStyle(fontSize: 35),
             ),
           ),
         ),
@@ -260,7 +259,95 @@ class CommentBox extends StatelessWidget {
     );
   }
 }
+class Team_Points extends StatelessWidget {
+  final Str comment;
+  const Team_Points(this.comment, {Key? key}) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: const EdgeInsets.all(10),
+        child:Column(
+            children:<Widget>[
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:<Widget>[
+                    const Text("Alliance Team 1: ",style: TextStyle(fontSize: 30)),
+                    SizedBox(
+                        width: 120,
+                        child: TextField(
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(fontSize: 30),
+                          textAlign : TextAlign.center,
+                          onChanged: (data) {
+                            comment.data = data;
+                          },
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          maxLines: null,
+                          minLines: 1,
+                        )
+                    )
+                  ]
+              ),
+              const SizedBox(height: 10),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:<Widget>[
+                    const Text("Alliance Team 2: ",style: TextStyle(fontSize: 30)),
+                    SizedBox(
+                        width: 120,
+                        child: TextField(
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(fontSize: 30),
+                          textAlign : TextAlign.center,
+                          onChanged: (data) {
+                            comment.data = data;
+                          },
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          maxLines: null,
+                          minLines: 1,
+                        )
+                    )
+                  ]
+              ),
+              const SizedBox(height: 10),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:<Widget>[
+                    const Text("Alliance's Score: ",style: TextStyle(fontSize: 30)),
+                    SizedBox(
+                      width: 120,
+                      child: TextField(
+                        keyboardType: TextInputType.number,
+                        style: TextStyle(fontSize: 30),
+                        textAlign : TextAlign.center,
+                        onChanged: (data) {
+                          comment.data = data;
+                        },
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        maxLines: null,
+                        minLines: 1,
+                      )
+                    )
+          ]
+        ),
+        ]
+        )
+    );
+  }
+}
 
 
 class TeamInput extends StatefulWidget {
@@ -323,6 +410,93 @@ class TeamInputState extends State<TeamInput> {
           ),
         );
       },
+    );
+  }
+}
+
+
+
+
+String formatTime(int milliseconds) {
+  var secs = milliseconds ~/ 1000;
+  var hours = (secs ~/ 3600).toString().padLeft(2, '0');
+  var minutes = ((secs % 3600) ~/ 60).toString().padLeft(2, '0');
+  var seconds = (secs % 60).toString().padLeft(2, '0');
+
+  return "$hours:$minutes:$seconds";
+}
+
+
+
+class StopwatchPage extends StatefulWidget {
+  final String text;
+  final Str label;
+  StopwatchPage(this.label, this.text);
+  @override
+  _StopwatchPageState createState() => _StopwatchPageState();
+}
+
+class _StopwatchPageState extends State<StopwatchPage> {
+  late Stopwatch _stopwatch;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _stopwatch = Stopwatch();
+    _timer = new Timer.periodic(new Duration(milliseconds: 30), (timer) {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  void handleStartStop() {
+    if (_stopwatch.isRunning) {
+      _stopwatch.stop();
+    } else {
+      _stopwatch.start();
+    }
+
+    setState(() {});
+  }
+  void handleReset() {
+    _stopwatch.reset();
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(widget.text+formatTime(_stopwatch.elapsedMilliseconds), style: TextStyle(fontSize: 35.0)),
+            const SizedBox(height: 10.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+            SizedBox(
+              width: 100.0,
+              height: 50.0,
+              child:ElevatedButton(
+                    onPressed: handleStartStop,
+                    child: Text(_stopwatch.isRunning ? 'Stop' : 'Start',style: TextStyle(fontSize: 20),)),),
+                const SizedBox(width:10.0),
+                SizedBox(
+                  width: 100.0,
+                  height: 50.0,
+                  child:ElevatedButton(
+                    onPressed: handleReset,
+                    child: Text('Reset',style: TextStyle(fontSize: 20),)),)
+              ],
+            ),
+
+            const SizedBox(height: 10.0),
+          ],
     );
   }
 }
