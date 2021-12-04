@@ -105,7 +105,7 @@ class _FormCounterState extends State<FormCounter> {
       Text(
         widget.label,
         textScaleFactor: 2,
-        style: TextStyle(fontSize: 16.5)
+        style: TextStyle(fontSize: 17.5)
       ),
 
       Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
@@ -175,7 +175,7 @@ class _FormMultChoiceState extends State<FormMultChoice> {
       Text(
         widget.label,
         textScaleFactor: 2,
-        style: const TextStyle(fontSize: 16.5)
+        style: const TextStyle(fontSize: 17.5)
       )
     ];
     for (String choice in widget.choices) {
@@ -466,6 +466,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
   }
   void handleReset() {
     _stopwatch.reset();
+    _stopwatch.stop();
     setState(() {});
   }
 
@@ -474,7 +475,8 @@ class _StopwatchPageState extends State<StopwatchPage> {
     return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(widget.text+formatTime(_stopwatch.elapsedMilliseconds), style: TextStyle(fontSize: 35.0)),
+            Text(widget.text, style: TextStyle(fontSize: 35.0)),
+            Text(formatTime(_stopwatch.elapsedMilliseconds), style: TextStyle(fontSize: 70.0)),
             const SizedBox(height: 10.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -485,7 +487,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
               child:ElevatedButton(
                     onPressed: handleStartStop,
                     child: Text(_stopwatch.isRunning ? 'Stop' : 'Start',style: TextStyle(fontSize: 20),)),),
-                const SizedBox(width:10.0),
+                const SizedBox(width:70.0),
                 SizedBox(
                   width: 100.0,
                   height: 50.0,
